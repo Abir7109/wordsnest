@@ -183,6 +183,32 @@ export default function Reviews() {
             <MessageCircle size={48} className="text-text-secondary/30 mb-4" />
             <p className="text-text-secondary">No experiences yet. Be the first to share!</p>
           </div>
+        ) : reviews.length <= 3 ? (
+          <div className="flex justify-center gap-4 md:gap-6 py-4 px-4">
+            {reviews.map((review, idx) => (
+              <div 
+                key={`${review.id}-${idx}`}
+                className="flex-shrink-0 w-[260px] md:w-[320px] bg-white p-5 md:p-6 rounded-[20px] md:rounded-[24px] border border-divider shadow-sm"
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                      <User size={18} />
+                    </div>
+                    <div>
+                      <h4 className="font-serif font-bold text-text-primary text-xs md:text-sm">{review.name}</h4>
+                    </div>
+                  </div>
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={12} fill={i < review.rating ? "#EAB308" : "none"} className={i < review.rating ? "text-warning" : "text-divider"} />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-[11px] md:text-xs text-text-secondary leading-relaxed line-clamp-3">{review.experience}</p>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="flex overflow-hidden">
             <motion.div 
@@ -197,7 +223,7 @@ export default function Reviews() {
               }}
               className="flex gap-4 md:gap-6 py-4 pr-4 md:pr-6 cursor-pointer"
             >
-              {reviews.map((review, idx) => (
+              {[...reviews, ...reviews].map((review, idx) => (
                 <div 
                   key={`${review.id}-${idx}`}
                   className="flex-shrink-0 w-[260px] md:w-[320px] bg-white p-5 md:p-6 rounded-[20px] md:rounded-[24px] border border-divider shadow-sm hover:shadow-md transition-shadow group/card"

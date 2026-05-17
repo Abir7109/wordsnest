@@ -44,17 +44,15 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link to="/download">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-secondary text-white px-3 md:px-5 py-1.5 md:py-2 rounded-full font-mono text-[10px] md:text-xs font-medium flex items-center gap-1.5 md:gap-2 hover:opacity-90 shadow-md transition-all whitespace-nowrap"
-            >
-              <Download size={12} className="md:w-3.5 md:h-3.5" />
-              <span className="hidden sm:inline">Get App</span>
-              <span className="sm:hidden">Download</span>
-            </motion.button>
-          </Link>
+          <a 
+            href="/words-nest-v1.4.2.apk"
+            download
+            className="bg-secondary text-white px-3 md:px-5 py-1.5 md:py-2 rounded-full font-mono text-[10px] md:text-xs font-medium flex items-center gap-1.5 md:gap-2 hover:opacity-90 shadow-md transition-all whitespace-nowrap"
+          >
+            <Download size={12} className="md:w-3.5 md:h-3.5" />
+            <span className="hidden sm:inline">Get App</span>
+            <span className="sm:hidden">Download</span>
+          </a>
 
           {/* Mobile Menu Toggle */}
           <button 

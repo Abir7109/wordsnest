@@ -31,7 +31,7 @@ const INITIAL_REVIEWS: Review[] = [
   }
 ];
 
-const API_URL = "https://words-nest.onrender.com";
+const API_URL = import.meta.env.VITE_API_URL || "https://words-nest.onrender.com";
 
 export default function Reviews() {
   const [reviews, setReviews] = useState<Review[]>([]);

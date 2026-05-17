@@ -6,9 +6,10 @@ const platforms = [
     name: "Android Mobile",
     icon: Smartphone,
     status: "Available",
-    version: "v2.4.1",
-    size: "42MB",
-    features: ["Instant OCR Scanner", "Offline Mode", "Flashcard Sync"]
+    version: "v1.4.2",
+    size: "28MB",
+    features: ["Instant OCR Scanner", "Offline Mode", "Flashcard Sync"],
+    downloadUrl: "/words-nest-v1.4.2.apk"
   },
   {
     name: "Desktop Web",
@@ -72,13 +73,24 @@ export default function DownloadPage() {
                    </div>
                  ))}
               </div>
-              <button 
-                disabled={platform.status !== "Available"}
-                className={`w-full py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all ${platform.status === "Available" ? "bg-primary text-white hover:shadow-xl hover:-translate-y-1" : "bg-divider text-text-secondary cursor-not-allowed"}`}
-              >
-                 <Download size={18} />
-                 Download Now
-              </button>
+              {platform.downloadUrl ? (
+                <a 
+                  href={platform.downloadUrl}
+                  download
+                  className="w-full py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all bg-primary text-white hover:shadow-xl hover:-translate-y-1"
+                >
+                  <Download size={18} />
+                  Download Now
+                </a>
+              ) : (
+                <button 
+                  disabled
+                  className="w-full py-4 rounded-full font-bold flex items-center justify-center gap-2 bg-divider text-text-secondary cursor-not-allowed"
+                >
+                  <Download size={18} />
+                  Coming Soon
+                </button>
+              )}
             </motion.div>
           ))}
         </div>

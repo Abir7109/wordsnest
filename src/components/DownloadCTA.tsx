@@ -1,5 +1,8 @@
 import { motion } from "motion/react";
 import { Download } from "lucide-react";
+import { QRCodeSVG } from 'qrcode.react';
+
+const APK_URL = "/words-nest-v1.4.2.apk";
 
 export default function DownloadCTA() {
   return (
@@ -25,28 +28,26 @@ export default function DownloadCTA() {
               whileHover={{ scale: 1.05 }}
               className="bg-white p-3 md:p-5 rounded-xl md:rounded-2xl shadow-2xl transition-transform duration-300"
             >
-              <img 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqKVNmnxWVp9SWk5JnEMPyOkpHum_yCMhmRXcAFkwci4h1nTK54BPFYjlHl2lSXt1eTDo1AdqdxQwuztAucS50Ygb8_aJdKa6UyMW-AvG1CTm7WileroaIQw6mF66g0T9LbGhPR8-5kbgpOj9xZlqJ0GkLRNUxaqVhgaD9dnkIutygUW2CevSD0yxY6Pcs0lq3EVKkB3BNSshpDWidBbCWSnrqG5ejYbVobNEyMtu3rxJmRcOZMCh4FrL5VPwC6twdLaLwKEmtKDiU" 
-                alt="Scan to download" 
-                className="w-16 h-16 md:w-24 md:h-24"
-              />
-              <p className="text-neutral-900 font-mono text-[8px] md:text-[9px] font-bold mt-2 md:mt-3 tracking-widest uppercase opacity-60 text-center uppercase">Scan</p>
+              <QRCodeSVG value={APK_URL} size={96} />
+              <p className="text-neutral-900 font-mono text-[8px] md:text-[9px] font-bold mt-2 md:mt-3 tracking-widest uppercase opacity-60 text-center uppercase">Scan to Install</p>
             </motion.div>
             
             <div className="flex flex-col gap-3">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="bg-primary-container text-on-primary-container px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded-2xl font-serif text-sm md:text-base font-bold flex items-center gap-3 hover:shadow-[0_0_30px_rgba(201,181,156,0.2)] transition-all min-w-[240px]"
-              >
-                <div className="bg-neutral-900 rounded-lg p-1.5">
-                  <Download size={18} className="text-white" />
-                </div>
-                <div className="text-left">
-                  <div className="text-[10px] uppercase font-mono opacity-60 leading-none mb-1">Get it on</div>
-                  <div className="leading-none">Google Play</div>
-                </div>
-              </motion.button>
+              <a href={APK_URL} download>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-primary-container text-on-primary-container px-6 md:px-8 py-3 md:py-3.5 rounded-xl md:rounded-2xl font-serif text-sm md:text-base font-bold flex items-center gap-3 hover:shadow-[0_0_30px_rgba(201,181,156,0.2)] transition-all min-w-[240px]"
+                >
+                  <div className="bg-neutral-900 rounded-lg p-1.5">
+                    <Download size={18} className="text-white" />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-[10px] uppercase font-mono opacity-60 leading-none mb-1">Download</div>
+                    <div className="leading-none">Words Nest APK</div>
+                  </div>
+                </motion.button>
+              </a>
 
               <motion.button
                 disabled

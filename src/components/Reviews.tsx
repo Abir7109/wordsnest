@@ -27,18 +27,7 @@ export default function Reviews() {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // Keep only unique reviews (no duplicates)
-          const unique = data.filter((v,i,a)=>a.findIndex(t=>(t.id===v.id))===i);
-          setReviews(unique);
-          // Add temp reviews to make 4 total
-          if (unique.length > 0 && unique.length < 4) {
-            const tempReviews = [
-              { id: "temp1", name: "Abdur Rahim", rating: 5, experience: "This app is amazing for IELTS preparation. The scan feature saves me hours of work!", createdAt: Date.now() - 86400000 },
-              { id: "temp2", name: "Kibriya Hassan", rating: 5, experience: "Love the clean design and context-sensitive meanings. Helped me improve my vocabulary significantly.", createdAt: Date.now() - 172800000 },
-              { id: "temp3", name: "Salman Muktadir", rating: 4, experience: "Great app for academic writing. Wish it had more idioms but overall outstanding quality.", createdAt: Date.now() - 259200000 }
-            ];
-            setReviews([...unique, ...tempReviews]);
-          }
+          setReviews(data);
         }
       })
       .catch(() => {})

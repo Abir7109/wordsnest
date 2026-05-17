@@ -1,0 +1,8 @@
+{
+  "name": "Words Nest",
+  "description": "Master IELTS vocabulary with Words Nest. Premium AI-powered vocabulary learning tailored for excellence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

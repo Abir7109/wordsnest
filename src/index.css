@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Nunito Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-primary: #6b5c47;
+  --color-primary-container: #c9b59c;
+  --color-on-primary-container: #554633;
+  --color-secondary: #74593e;
+  --color-secondary-container: #fdd9b6;
+  --color-on-secondary-container: #785e42;
+  --color-tertiary: #44664a;
+  --color-tertiary-container: #9cc19f;
+  --color-on-tertiary-container: #2f5035;
+  --color-surface: #EFE9E3;
+  --color-surface-bright: #faf9f7;
+  --color-surface-container: #efeeec;
+  --color-surface-container-low: #f4f3f1;
+  --color-surface-container-highest: #e3e2e0;
+  --color-text-primary: #2C2420;
+  --color-text-secondary: #6B5B4E;
+  --color-divider: #E2D9D0;
+  --color-warning: #D4A574;
+  --color-outline: #7e766c;
+  
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+}
+
+@layer base {
+  body {
+    @apply bg-surface-bright text-text-primary font-sans antialiased;
+  }
+}
+
+.glass-header {
+  @apply backdrop-blur-md bg-surface-bright/80 border-b border-divider/50;
+}
+
+.card-shadow {
+  box-shadow: 0 4px 12px rgba(44, 36, 32, 0.08), 0 8px 24px rgba(44, 36, 32, 0.16);
+}
+
+@keyframes scan {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.animate-scan {
+  animation: scan 3s linear infinite;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-divider/10 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-divider rounded-full hover:bg-primary/30 transition-colors;
+}

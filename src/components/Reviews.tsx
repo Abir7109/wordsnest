@@ -197,7 +197,7 @@ export default function Reviews() {
               }}
               className="flex gap-4 md:gap-6 py-4 pr-4 md:pr-6 cursor-pointer"
             >
-              {[...reviews, ...reviews].map((review, idx) => (
+              {reviews.map((review, idx) => (
                 <div 
                   key={`${review.id}-${idx}`}
                   className="flex-shrink-0 w-[260px] md:w-[320px] bg-white p-5 md:p-6 rounded-[20px] md:rounded-[24px] border border-divider shadow-sm hover:shadow-md transition-shadow group/card"

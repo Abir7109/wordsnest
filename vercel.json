@@ -5,7 +5,8 @@
       "headers": [
         { "key": "X-Robots-Tag", "value": "index, follow" },
         { "key": "X-Frame-Options", "value": "ALLOWALL" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Vary", "value": "User-Agent" }
       ]
     },
     {
@@ -20,6 +21,12 @@
       "source": "/robots.txt",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "source": "/_vercel/**",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex" }
       ]
     }
   ]

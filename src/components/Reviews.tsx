@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Star, Send, User, Loader2 } from "lucide-react";
+import { Star, Send, User, Loader2, MessageCircle } from "lucide-react";
 
 interface Review {
   id: string;
@@ -9,27 +9,6 @@ interface Review {
   experience: string;
   createdAt?: number;
 }
-
-const INITIAL_REVIEWS: Review[] = [
-  {
-    id: "1",
-    name: "Sakib Ahmed",
-    rating: 5,
-    experience: "This app is a game changer for IELTS students. The scan feature is incredibly accurate!",
-  },
-  {
-    id: "2",
-    name: "Emma Wilson",
-    rating: 5,
-    experience: "I love the clean design and the context-sensitive meanings. High quality stuff.",
-  },
-  {
-    id: "3",
-    name: "Rahat Kabir",
-    rating: 4,
-    experience: "Very helpful for academic writing. Wish it had more idioms, but overall outstanding.",
-  }
-];
 
 const API_URL = import.meta.env.VITE_API_URL || "https://words-nest.onrender.com";
 
@@ -49,11 +28,9 @@ export default function Reviews() {
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
           setReviews(data);
-        } else {
-          setReviews(INITIAL_REVIEWS);
         }
       })
-      .catch(() => setReviews(INITIAL_REVIEWS))
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
@@ -191,6 +168,11 @@ export default function Reviews() {
         {loading ? (
           <div className="flex justify-center py-8">
             <Loader2 className="animate-spin text-primary" size={32} />
+          </div>
+) : !loading && reviews.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <MessageCircle size={48} className="text-text-secondary/30 mb-4" />
+            <p className="text-text-secondary">No experiences yet. Be the first to share!</p>
           </div>
         ) : (
           <div className="flex overflow-hidden">

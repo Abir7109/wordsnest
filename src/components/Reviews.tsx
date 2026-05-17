@@ -26,17 +26,19 @@ export default function Reviews() {
     fetch(`${API_URL}/api/experiences`)
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setReviews(data);
-        }
-        // Add temp reviews if only 1 real review
-        if (data.length > 0 && data.length < 4) {
-          const tempReviews = [
-            { id: "temp1", name: "রাহিম আহমেদ", rating: 5, experience: "অসাধারণ অ্যাপ! IELTS পড়াশোনায় অনt সাহায্য হয়েছে।", createdAt: Date.now() - 86400000 },
-            { id: "temp2", name: "তানভীর হোসাইন", rating: 5, experience: "স্ক্যান ফিচারটি অনেক দ্রুত কাজ করে। খুবই সহজ ব্যবহার।", createdAt: Date.now() - 172800000 },
-            { id: "temp3", name: "সাবিনা আক্তার", rating: 4, experience: "ভালো অ্যাপ। একটু বেশি শব্দ থাকলে আরও ভালো হত।", createdAt: Date.now() - 259200000 }
-          ];
-          setReviews([...data, ...tempReviews]);
+        if (Array.isArray(data)) {
+          // Keep only unique reviews (no duplicates)
+          const unique = data.filter((v,i,a)=>a.findIndex(t=>(t.id===v.id))===i);
+          setReviews(unique);
+          // Add temp reviews to make 4 total
+          if (unique.length > 0 && unique.length < 4) {
+            const tempReviews = [
+              { id: "temp1", name: "Abdur Rahim", rating: 5, experience: "This app is amazing for IELTS preparation. The scan feature saves me hours of work!", createdAt: Date.now() - 86400000 },
+              { id: "temp2", name: "Kibriya Hassan", rating: 5, experience: "Love the clean design and context-sensitive meanings. Helped me improve my vocabulary significantly.", createdAt: Date.now() - 172800000 },
+              { id: "temp3", name: "Salman Muktadir", rating: 4, experience: "Great app for academic writing. Wish it had more idioms but overall outstanding quality.", createdAt: Date.now() - 259200000 }
+            ];
+            setReviews([...unique, ...tempReviews]);
+          }
         }
       })
       .catch(() => {})

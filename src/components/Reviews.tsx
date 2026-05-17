@@ -46,7 +46,16 @@ export default function Reviews() {
         body: JSON.stringify({ name: name.trim(), experience: comment.trim(), rating })
       });
       if (res.ok) {
-        setSubmitMsg("Thanks! Your experience will appear after approval.");
+        // Add submitted review immediately to the list
+        const newReview = { 
+          id: Date.now().toString(), 
+          name: name.trim(), 
+          experience: comment.trim(), 
+          rating,
+          createdAt: Date.now()
+        };
+        setReviews(prev => [newReview, ...prev]);
+        setSubmitMsg("Thanks! Your experience has been shared!");
         setName("");
         setComment("");
         setRating(5);

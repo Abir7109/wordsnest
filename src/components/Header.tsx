@@ -22,7 +22,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-2 md:py-3 flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2 group">
           <img 
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHsLS-maEFpdMrUFD35cpAcuJvdFuiT1Sk4kgqRhjqH0I_NGb0P9pXoG9OYto6R4fKHBQ0Gg1b7CFuR981IsgXZRPtfXQYz5Zva-C8OZbADhE_NDGQnG70vshLxSnME5nWg1wW9XMBo9SWnIaHak_3lc_8u0o9JW3pGJSqV2apTklQyJfASIzEU9miZFkp6ohUfenwVWp_kAwX_dBzcYLof4UE41XmtJb5As4j8o0RPcCCKRxWOXoh7D2ahQdS9MOJHFngddl29nvG" 
+            src="/icon.png" 
             alt="Words Nest" 
             className="h-7 md:h-9 w-auto transition-transform group-hover:scale-110"
           />

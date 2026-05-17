@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="md:col-span-5 space-y-4 md:space-y-8">
           <Link to="/" className="flex items-center gap-2 md:gap-4 justify-center md:justify-start group">
             <img 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHsLS-maEFpdMrUFD35cpAcuJvdFuiT1Sk4kgqRhjqH0I_NGb0P9pXoG9OYto6R4fKHBQ0Gg1b7CFuR981IsgXZRPtfXQYz5Zva-C8OZbADhE_NDGQnG70vshLxSnME5nWg1wW9XMBo9SWnIaHak_3lc_8u0o9JW3pGJSqV2apTklQyJfASIzEU9miZFkp6ohUfenwVWp_kAwX_dBzcYLof4UE41XmtJb5As4j8o0RPcCCKRxWOXoh7D2ahQdS9MOJHFngddl29nvG" 
+              src="/icon.png" 
               alt="Words Nest" 
               className="h-8 md:h-14 w-auto transition-transform group-hover:scale-110"
             />
@@ -18,8 +18,8 @@ export default function Footer() {
             Cultivating IELTS Excellence through intelligent, distraction-free vocabulary building.
           </p>
           <div className="flex gap-6 justify-center md:justify-start pt-2">
-            <a href="#" className="hover:text-primary-container transition-all hover:scale-110"><Facebook size={22} /></a>
-            <a href="#" className="hover:text-primary-container transition-all hover:scale-110"><Instagram size={22} /></a>
+            <a href="https://web.facebook.com/profile.php?id=61587401405859" target="_blank" rel="noopener noreferrer" className="hover:text-primary-container transition-all hover:scale-110"><Facebook size={22} /></a>
+            <a href="https://www.instagram.com/rm_abir71/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-container transition-all hover:scale-110"><Instagram size={22} /></a>
             <a href="https://rmabir71.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-container transition-all hover:scale-110" title="Developer Portfolio">
               <Globe size={22} />
             </a>

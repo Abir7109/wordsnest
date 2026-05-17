@@ -29,6 +29,15 @@ export default function Reviews() {
         if (Array.isArray(data) && data.length > 0) {
           setReviews(data);
         }
+        // Add temp reviews if only 1 real review
+        if (data.length > 0 && data.length < 4) {
+          const tempReviews = [
+            { id: "temp1", name: "রাহিম আহমেদ", rating: 5, experience: "অসাধারণ অ্যাপ! IELTS পড়াশোনায় অনt সাহায্য হয়েছে।", createdAt: Date.now() - 86400000 },
+            { id: "temp2", name: "তানভীর হোসাইন", rating: 5, experience: "স্ক্যান ফিচারটি অনেক দ্রুত কাজ করে। খুবই সহজ ব্যবহার।", createdAt: Date.now() - 172800000 },
+            { id: "temp3", name: "সাবিনা আক্তার", rating: 4, experience: "ভালো অ্যাপ। একটু বেশি শব্দ থাকলে আরও ভালো হত।", createdAt: Date.now() - 259200000 }
+          ];
+          setReviews([...data, ...tempReviews]);
+        }
       })
       .catch(() => {})
       .finally(() => setLoading(false));

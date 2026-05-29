@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { Download } from "lucide-react";
 import { QRCodeSVG } from 'qrcode.react';
 
-const APK_URL = "/words-nest-v1.4.2.apk";
+const APK_URL = "/wordsnest-v2.0.0.apk";
 
 export default function DownloadCTA() {
   return (

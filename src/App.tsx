@@ -13,6 +13,7 @@ import HowItWorksPage from "./pages/HowItWorksPage";
 import ScanPage from "./pages/ScanPage";
 import ReviewsPage from "./pages/ReviewsPage";
 import DownloadPage from "./pages/DownloadPage";
+import DemoPage from "./pages/DemoPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/scan" element={<ScanPage />} />
             <Route path="/reviews" element={<ReviewsPage />} />
             <Route path="/download" element={<DownloadPage />} />
+            <Route path="/demo" element={<DemoPage />} />
           </Routes>
         </main>
         <Footer />

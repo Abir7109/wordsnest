@@ -6,10 +6,10 @@ const platforms = [
     name: "Android Mobile",
     icon: Smartphone,
     status: "Available",
-    version: "v1.4.2",
+    version: "v1.4.3",
     size: "28MB",
     features: ["Instant OCR Scanner", "Offline Mode", "Flashcard Sync"],
-    downloadUrl: "/words-nest-v1.4.2.apk"
+    downloadUrl: "/words-nest-v1.4.3.apk"
   },
   {
     name: "Desktop Web",

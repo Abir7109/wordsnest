@@ -45,7 +45,7 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <a 
-            href="/words-nest-v1.4.2.apk"
+            href="/wordsnest-v2.0.0.apk"
             download
             className="bg-secondary text-white px-3 md:px-5 py-1.5 md:py-2 rounded-full font-mono text-[10px] md:text-xs font-medium flex items-center gap-1.5 md:gap-2 hover:opacity-90 shadow-md transition-all whitespace-nowrap"
           >

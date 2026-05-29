@@ -1,9 +1,234 @@
-import { motion } from "motion/react";
-import { Bookmark } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Bookmark, Download, Sparkles, Cloud, Zap, X, PartyPopper, Star } from "lucide-react";
+import { Link } from "react-router-dom";
+
+function Confetti() {
+  const pieces = useMemo(() =>
+    Array.from({ length: 60 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      delay: Math.random() * 2,
+      duration: 2 + Math.random() * 3,
+      color: ["#AA7137", "#D4A574", "#C4956A", "#F5D6A8", "#E8C4A0", "#FFD700", "#FF6B6B", "#4ECDC4"][Math.floor(Math.random() * 8)],
+      size: 6 + Math.random() * 8,
+      rotation: Math.random() * 360,
+      shape: Math.random() > 0.5 ? "circle" : "rect",
+    })), []
+  );
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-[60] overflow-hidden">
+      {pieces.map((p) => (
+        <motion.div
+          key={p.id}
+          initial={{
+            opacity: 1,
+            x: `${p.x}vw`,
+            y: -20,
+            rotate: 0,
+            scale: 1,
+          }}
+          animate={{
+            y: "110vh",
+            rotate: 720 + p.rotation,
+            opacity: [1, 1, 0.8, 0],
+            scale: [1, 1.2, 0.8, 0.5],
+          }}
+          transition={{
+            duration: p.duration,
+            delay: p.delay,
+            repeat: Infinity,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
+          className="absolute"
+          style={{
+            width: p.size,
+            height: p.shape === "circle" ? p.size : p.size * 0.6,
+            borderRadius: p.shape === "circle" ? "50%" : "2px",
+            background: p.color,
+            boxShadow: `0 0 6px ${p.color}66`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function Hero() {
+  const [showCelebration, setShowCelebration] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowCelebration(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className="relative h-auto md:min-h-screen pt-14 md:pt-24 pb-8 md:pb-0 flex items-center overflow-hidden bg-[radial-gradient(circle_at_top_right,#F9F8F6_0%,#D9CFC7_100%)]">
+      {/* v2.0.0 Celebration Modal */}
+      <AnimatePresence>
+        {showCelebration && (
+          <>
+            <Confetti />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+              onClick={() => setShowCelebration(false)}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5, y: 40 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                transition={{ type: "spring", stiffness: 250, damping: 18, delay: 0.1 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative w-full max-w-lg"
+              >
+                {/* Glow rings */}
+                <motion.div
+                  animate={{ scale: [1, 1.08, 1], opacity: [0.3, 0.5, 0.3] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -inset-4 rounded-3xl bg-[#AA7137]/20 blur-2xl"
+                />
+                <motion.div
+                  animate={{ scale: [1, 1.12, 1], opacity: [0.15, 0.35, 0.15] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                  className="absolute -inset-8 rounded-[40px] bg-[#D4A574]/15 blur-3xl"
+                />
+
+                {/* Card */}
+                <div className="relative bg-gradient-to-b from-[#FFFBF5] to-[#F5EDE4] rounded-3xl shadow-2xl border border-[#E8DDD0] overflow-hidden">
+                  {/* Top decorative bar */}
+                  <div className="h-2 bg-gradient-to-r from-[#AA7137] via-[#D4A574] to-[#C4956A]" />
+
+                  {/* Sparkle corner decorations */}
+                  <motion.div
+                    animate={{ rotate: 360, scale: [1, 1.2, 1] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-4 left-4 text-[#FFD700]/30"
+                  >
+                    <Star size={24} fill="currentColor" />
+                  </motion.div>
+                  <motion.div
+                    animate={{ rotate: -360, scale: [1, 1.3, 1] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    className="absolute bottom-4 right-4 text-[#FFD700]/20"
+                  >
+                    <Star size={20} fill="currentColor" />
+                  </motion.div>
+
+                  <button
+                    onClick={() => setShowCelebration(false)}
+                    className="absolute top-4 right-4 z-10 bg-[#E8DDD0]/50 hover:bg-[#E8DDD0] rounded-full p-1.5 transition-colors"
+                  >
+                    <X size={16} className="text-[#6B5B4E]" />
+                  </button>
+
+                  <div className="px-6 md:px-10 py-8 md:py-10 text-center">
+                    {/* Party icon */}
+                    <motion.div
+                      animate={{ y: [0, -6, 0], rotate: [0, -5, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                      className="inline-flex items-center justify-center mb-4"
+                    >
+                      <div className="bg-gradient-to-br from-[#AA7137] to-[#D4A574] p-3 rounded-full shadow-lg">
+                        <PartyPopper size={28} className="text-white" />
+                      </div>
+                    </motion.div>
+
+                    {/* Badge */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.4, type: "spring", stiffness: 300 }}
+                      className="inline-flex items-center gap-1.5 bg-[#AA7137]/10 border border-[#AA7137]/20 rounded-full px-4 py-1.5 mb-4"
+                    >
+                      <Sparkles size={14} className="text-[#AA7137]" />
+                      <span className="text-[#AA7137] font-mono text-[11px] font-bold tracking-widest uppercase">Brand New Release</span>
+                    </motion.div>
+
+                    {/* Title */}
+                    <motion.h2
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="font-serif text-3xl md:text-4xl font-bold text-[#2A170F] leading-tight mb-1"
+                    >
+                      Words Nest
+                    </motion.h2>
+                    <motion.div
+                      animate={{ scale: [1, 1.05, 1], textShadow: ["0 0 0px rgba(170,113,55,0)", "0 0 12px rgba(170,113,55,0.4)", "0 0 0px rgba(170,113,55,0)"] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      className="text-3xl md:text-5xl font-serif font-bold bg-gradient-to-r from-[#AA7137] via-[#D4A574] to-[#AA7137] bg-clip-text text-transparent mb-5"
+                    >
+                      2.0.0
+                    </motion.div>
+
+                    {/* Feature pills */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.7 }}
+                      className="flex flex-wrap justify-center gap-2 mb-6"
+                    >
+                      {[
+                        { icon: Cloud, label: "Real-time Cloud Sync" },
+                        { icon: Zap, label: "Redesigned UI" },
+                        { icon: Bookmark, label: "Smarter Learning" },
+                      ].map((f, i) => (
+                        <motion.span
+                          key={f.label}
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.8 + i * 0.15, type: "spring" }}
+                          className="inline-flex items-center gap-1.5 bg-[#F5EDE4] border border-[#E8DDD0] rounded-full px-3 py-1.5 text-[11px] font-semibold text-[#6B5B4E]"
+                        >
+                          <f.icon size={12} className="text-[#AA7137]" />
+                          {f.label}
+                        </motion.span>
+                      ))}
+                    </motion.div>
+
+                    {/* Description */}
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 1 }}
+                      className="text-xs md:text-sm text-[#897365] mb-6 max-w-xs mx-auto leading-relaxed"
+                    >
+                      Upgrade now to experience the next generation of vocabulary mastery.
+                    </motion.p>
+
+                    {/* Download button */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.1 }}
+                    >
+                      <a href="/wordsnest-v2.0.0.apk" download>
+                        <motion.button
+                          whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(170,113,55,0.3)" }}
+                          whileTap={{ scale: 0.95 }}
+                          animate={{ boxShadow: ["0 4px 14px rgba(170,113,55,0.2)", "0 4px 20px rgba(170,113,55,0.4)", "0 4px 14px rgba(170,113,55,0.2)"] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                          className="bg-gradient-to-r from-[#AA7137] to-[#C4956A] text-white px-8 py-3.5 rounded-full font-mono text-sm font-bold flex items-center gap-2.5 mx-auto shadow-lg hover:shadow-xl transition-all"
+                        >
+                          <Download size={16} />
+                          Download v2.0.0 Now
+                          <Sparkles size={14} className="text-yellow-200" />
+                        </motion.button>
+                      </a>
+                      <p className="text-[10px] text-[#BFA090] mt-3 font-mono">Free upgrade · Android 7+</p>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
       {/* Organic Blobs */}
       <motion.div 
         animate={{ 
@@ -76,26 +301,27 @@ export default function Hero() {
               </div>
               <span className="text-[8px] md:text-[10px] opacity-70 font-normal">Begin Your IELTS Mastery</span>
             </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('scan')?.scrollIntoView({ behavior: 'smooth' })}
-              className="border-2 border-primary text-primary px-6 md:px-10 py-3 md:py-4 rounded-full font-mono text-xs md:text-sm font-bold flex flex-col items-center justify-center gap-0.5 hover:bg-primary/5 transition-all min-w-[160px] md:min-w-[200px]"
-            >
-              <div className="flex items-center gap-2">
-                Watch Demo
-                <svg 
-                  width="16" 
-                  height="16" 
-                  viewBox="0 0 24 24" 
-                  fill="currentColor" 
-                  className="opacity-80"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-              <span className="text-[8px] md:text-[10px] opacity-70 font-normal">See the Scanner in Action</span>
-            </motion.button>
+            <Link to="/demo">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="border-2 border-primary text-primary px-6 md:px-10 py-3 md:py-4 rounded-full font-mono text-xs md:text-sm font-bold flex flex-col items-center justify-center gap-0.5 hover:bg-primary/5 transition-all min-w-[160px] md:min-w-[200px]"
+              >
+                <div className="flex items-center gap-2">
+                  Watch Demo
+                  <svg 
+                    width="16" 
+                    height="16" 
+                    viewBox="0 0 24 24" 
+                    fill="currentColor" 
+                    className="opacity-80"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+                <span className="text-[8px] md:text-[10px] opacity-70 font-normal">See the Scanner in Action</span>
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
 

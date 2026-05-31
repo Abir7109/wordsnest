@@ -1,59 +1,18 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Bookmark, Download, Sparkles, Cloud, Zap, X, PartyPopper, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
-function Confetti() {
-  const pieces = useMemo(() =>
-    Array.from({ length: 60 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      delay: Math.random() * 2,
-      duration: 2 + Math.random() * 3,
-      color: ["#AA7137", "#D4A574", "#C4956A", "#F5D6A8", "#E8C4A0", "#FFD700", "#FF6B6B", "#4ECDC4"][Math.floor(Math.random() * 8)],
-      size: 6 + Math.random() * 8,
-      rotation: Math.random() * 360,
-      shape: Math.random() > 0.5 ? "circle" : "rect",
-    })), []
-  );
-
-  return (
-    <div className="fixed inset-0 pointer-events-none z-[60] overflow-hidden">
-      {pieces.map((p) => (
-        <motion.div
-          key={p.id}
-          initial={{
-            opacity: 1,
-            x: `${p.x}vw`,
-            y: -20,
-            rotate: 0,
-            scale: 1,
-          }}
-          animate={{
-            y: "110vh",
-            rotate: 720 + p.rotation,
-            opacity: [1, 1, 0.8, 0],
-            scale: [1, 1.2, 0.8, 0.5],
-          }}
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: [0.25, 0.46, 0.45, 0.94],
-          }}
-          className="absolute"
-          style={{
-            width: p.size,
-            height: p.shape === "circle" ? p.size : p.size * 0.6,
-            borderRadius: p.shape === "circle" ? "50%" : "2px",
-            background: p.color,
-            boxShadow: `0 0 6px ${p.color}66`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+const STICKERS = [
+  { name: "ach_first_sprout", label: "First Sprout" },
+  { name: "ach_linguist", label: "Linguist" },
+  { name: "ach_quick_thinker", label: "Quick Thinker" },
+  { name: "ach_quiz_master", label: "Quiz Master" },
+  { name: "ach_solar_flare", label: "Solar Flare" },
+  { name: "ach_spark_3days", label: "3-Day Spark" },
+  { name: "ach_sunlight", label: "Sunlight" },
+  { name: "ach_top_gardener", label: "Top Gardener" },
+] as const;
 
 export default function Hero() {
   const [showCelebration, setShowCelebration] = useState(false);
@@ -68,165 +27,194 @@ export default function Hero() {
       {/* v2.0.0 Celebration Modal */}
       <AnimatePresence>
         {showCelebration && (
-          <>
-            <Confetti />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+            onClick={() => setShowCelebration(false)}
+          >
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-              onClick={() => setShowCelebration(false)}
+              initial={{ opacity: 0, scale: 0.5, y: 40 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: -20 }}
+              transition={{ type: "spring", stiffness: 250, damping: 18, delay: 0.1 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-lg"
             >
+              {/* Glow rings */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.5, y: 40 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.8, y: -20 }}
-                transition={{ type: "spring", stiffness: 250, damping: 18, delay: 0.1 }}
-                onClick={(e) => e.stopPropagation()}
-                className="relative w-full max-w-lg"
-              >
-                {/* Glow rings */}
+                animate={{ scale: [1, 1.08, 1], opacity: [0.3, 0.5, 0.3] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -inset-4 rounded-3xl bg-[#AA7137]/20 blur-2xl"
+              />
+              <motion.div
+                animate={{ scale: [1, 1.12, 1], opacity: [0.15, 0.35, 0.15] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                className="absolute -inset-8 rounded-[40px] bg-[#D4A574]/15 blur-3xl"
+              />
+
+              {/* Card */}
+              <div className="relative bg-gradient-to-b from-[#FFFBF5] to-[#F5EDE4] rounded-3xl shadow-2xl border border-[#E8DDD0] overflow-hidden">
+                {/* Top decorative bar */}
+                <div className="h-2 bg-gradient-to-r from-[#AA7137] via-[#D4A574] to-[#C4956A]" />
+
+                {/* Sparkle corner decorations */}
                 <motion.div
-                  animate={{ scale: [1, 1.08, 1], opacity: [0.3, 0.5, 0.3] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -inset-4 rounded-3xl bg-[#AA7137]/20 blur-2xl"
-                />
+                  animate={{ rotate: 360, scale: [1, 1.2, 1] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                  className="absolute top-4 left-4 text-[#FFD700]/30 z-[2]"
+                >
+                  <Star size={24} fill="currentColor" />
+                </motion.div>
                 <motion.div
-                  animate={{ scale: [1, 1.12, 1], opacity: [0.15, 0.35, 0.15] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                  className="absolute -inset-8 rounded-[40px] bg-[#D4A574]/15 blur-3xl"
-                />
+                  animate={{ rotate: -360, scale: [1, 1.3, 1] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                  className="absolute bottom-4 right-4 text-[#FFD700]/20 z-[2]"
+                >
+                  <Star size={20} fill="currentColor" />
+                </motion.div>
 
-                {/* Card */}
-                <div className="relative bg-gradient-to-b from-[#FFFBF5] to-[#F5EDE4] rounded-3xl shadow-2xl border border-[#E8DDD0] overflow-hidden">
-                  {/* Top decorative bar */}
-                  <div className="h-2 bg-gradient-to-r from-[#AA7137] via-[#D4A574] to-[#C4956A]" />
+                <button
+                  onClick={() => setShowCelebration(false)}
+                  className="absolute top-4 right-4 z-10 bg-[#E8DDD0]/50 hover:bg-[#E8DDD0] rounded-full p-1.5 transition-colors"
+                >
+                  <X size={16} className="text-[#6B5B4E]" />
+                </button>
 
-                  {/* Sparkle corner decorations */}
+                <div className="px-6 md:px-10 py-8 md:py-10 text-center">
+                  {/* Party icon */}
                   <motion.div
-                    animate={{ rotate: 360, scale: [1, 1.2, 1] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-4 left-4 text-[#FFD700]/30"
+                    animate={{ y: [0, -6, 0], rotate: [0, -5, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    className="inline-flex items-center justify-center mb-4"
                   >
-                    <Star size={24} fill="currentColor" />
+                    <div className="bg-gradient-to-br from-[#AA7137] to-[#D4A574] p-3 rounded-full shadow-lg">
+                      <PartyPopper size={28} className="text-white" />
+                    </div>
                   </motion.div>
+
+                  {/* Badge */}
                   <motion.div
-                    animate={{ rotate: -360, scale: [1, 1.3, 1] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                    className="absolute bottom-4 right-4 text-[#FFD700]/20"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4, type: "spring", stiffness: 300 }}
+                    className="inline-flex items-center gap-1.5 bg-[#AA7137]/10 border border-[#AA7137]/20 rounded-full px-4 py-1.5 mb-4"
                   >
-                    <Star size={20} fill="currentColor" />
+                    <Sparkles size={14} className="text-[#AA7137]" />
+                    <span className="text-[#AA7137] font-mono text-[11px] font-bold tracking-widest uppercase">Brand New Release</span>
                   </motion.div>
 
-                  <button
-                    onClick={() => setShowCelebration(false)}
-                    className="absolute top-4 right-4 z-10 bg-[#E8DDD0]/50 hover:bg-[#E8DDD0] rounded-full p-1.5 transition-colors"
+                  {/* Title */}
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="font-serif text-3xl md:text-4xl font-bold text-[#2A170F] leading-tight mb-1"
                   >
-                    <X size={16} className="text-[#6B5B4E]" />
-                  </button>
+                    Words Nest
+                  </motion.h2>
+                  <motion.div
+                    animate={{ scale: [1, 1.05, 1], textShadow: ["0 0 0px rgba(170,113,55,0)", "0 0 12px rgba(170,113,55,0.4)", "0 0 0px rgba(170,113,55,0)"] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="text-3xl md:text-5xl font-serif font-bold bg-gradient-to-r from-[#AA7137] via-[#D4A574] to-[#AA7137] bg-clip-text text-transparent mb-5"
+                  >
+                    2.0.0
+                  </motion.div>
 
-                  <div className="px-6 md:px-10 py-8 md:py-10 text-center">
-                    {/* Party icon */}
-                    <motion.div
-                      animate={{ y: [0, -6, 0], rotate: [0, -5, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                      className="inline-flex items-center justify-center mb-4"
-                    >
-                      <div className="bg-gradient-to-br from-[#AA7137] to-[#D4A574] p-3 rounded-full shadow-lg">
-                        <PartyPopper size={28} className="text-white" />
-                      </div>
-                    </motion.div>
-
-                    {/* Badge */}
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.4, type: "spring", stiffness: 300 }}
-                      className="inline-flex items-center gap-1.5 bg-[#AA7137]/10 border border-[#AA7137]/20 rounded-full px-4 py-1.5 mb-4"
-                    >
-                      <Sparkles size={14} className="text-[#AA7137]" />
-                      <span className="text-[#AA7137] font-mono text-[11px] font-bold tracking-widest uppercase">Brand New Release</span>
-                    </motion.div>
-
-                    {/* Title */}
-                    <motion.h2
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 }}
-                      className="font-serif text-3xl md:text-4xl font-bold text-[#2A170F] leading-tight mb-1"
-                    >
-                      Words Nest
-                    </motion.h2>
-                    <motion.div
-                      animate={{ scale: [1, 1.05, 1], textShadow: ["0 0 0px rgba(170,113,55,0)", "0 0 12px rgba(170,113,55,0.4)", "0 0 0px rgba(170,113,55,0)"] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                      className="text-3xl md:text-5xl font-serif font-bold bg-gradient-to-r from-[#AA7137] via-[#D4A574] to-[#AA7137] bg-clip-text text-transparent mb-5"
-                    >
-                      2.0.0
-                    </motion.div>
-
-                    {/* Feature pills */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.7 }}
-                      className="flex flex-wrap justify-center gap-2 mb-6"
-                    >
-                      {[
-                        { icon: Cloud, label: "Real-time Cloud Sync" },
-                        { icon: Zap, label: "Redesigned UI" },
-                        { icon: Bookmark, label: "Smarter Learning" },
-                      ].map((f, i) => (
-                        <motion.span
-                          key={f.label}
+                  {/* Sticker achievements showcase */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="mb-5"
+                  >
+                    <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#AA7137]/60 mb-3">Achievements Unlocked</p>
+                    <div className="flex flex-wrap justify-center gap-2.5 md:gap-3">
+                      {STICKERS.map((s, i) => (
+                        <motion.div
+                          key={s.name}
                           initial={{ opacity: 0, scale: 0 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.8 + i * 0.15, type: "spring" }}
-                          className="inline-flex items-center gap-1.5 bg-[#F5EDE4] border border-[#E8DDD0] rounded-full px-3 py-1.5 text-[11px] font-semibold text-[#6B5B4E]"
+                          transition={{ delay: 0.8 + i * 0.08, type: "spring", stiffness: 250, damping: 12 }}
                         >
-                          <f.icon size={12} className="text-[#AA7137]" />
-                          {f.label}
-                        </motion.span>
+                          <motion.div
+                            animate={{ y: [0, -(i % 3 + 1) * 1.5, 0] }}
+                            transition={{ duration: 2.5 + i * 0.2, repeat: Infinity, ease: "easeInOut", delay: i * 0.15 }}
+                            className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white shadow-md border-2 border-[#E8DDD0] flex items-center justify-center overflow-hidden p-0.5"
+                          >
+                            <img
+                              src={`/assets/${s.name}.png`}
+                              alt={s.label}
+                              className="w-full h-full object-contain"
+                            />
+                          </motion.div>
+                        </motion.div>
                       ))}
-                    </motion.div>
+                    </div>
+                  </motion.div>
 
-                    {/* Description */}
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 1 }}
-                      className="text-xs md:text-sm text-[#897365] mb-6 max-w-xs mx-auto leading-relaxed"
-                    >
-                      Upgrade now to experience the next generation of vocabulary mastery.
-                    </motion.p>
+                  {/* Feature pills */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2 }}
+                    className="flex flex-wrap justify-center gap-2 mb-6"
+                  >
+                    {[
+                      { icon: Cloud, label: "Real-time Cloud Sync" },
+                      { icon: Zap, label: "Redesigned UI" },
+                      { icon: Bookmark, label: "Smarter Learning" },
+                    ].map((f, i) => (
+                      <motion.span
+                        key={f.label}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 1.3 + i * 0.15, type: "spring" }}
+                        className="inline-flex items-center gap-1.5 bg-[#F5EDE4] border border-[#E8DDD0] rounded-full px-3 py-1.5 text-[11px] font-semibold text-[#6B5B4E]"
+                      >
+                        <f.icon size={12} className="text-[#AA7137]" />
+                        {f.label}
+                      </motion.span>
+                    ))}
+                  </motion.div>
 
-                    {/* Download button */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.1 }}
-                    >
-                      <a href="/wordsnest-v2.0.0.apk" download>
-                        <motion.button
-                          whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(170,113,55,0.3)" }}
-                          whileTap={{ scale: 0.95 }}
-                          animate={{ boxShadow: ["0 4px 14px rgba(170,113,55,0.2)", "0 4px 20px rgba(170,113,55,0.4)", "0 4px 14px rgba(170,113,55,0.2)"] }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                          className="bg-gradient-to-r from-[#AA7137] to-[#C4956A] text-white px-8 py-3.5 rounded-full font-mono text-sm font-bold flex items-center gap-2.5 mx-auto shadow-lg hover:shadow-xl transition-all"
-                        >
-                          <Download size={16} />
-                          Download v2.0.0 Now
-                          <Sparkles size={14} className="text-yellow-200" />
-                        </motion.button>
-                      </a>
-                      <p className="text-[10px] text-[#BFA090] mt-3 font-mono">Free upgrade · Android 7+</p>
-                    </motion.div>
-                  </div>
+                  {/* Description */}
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5 }}
+                    className="text-xs md:text-sm text-[#897365] mb-6 max-w-xs mx-auto leading-relaxed"
+                  >
+                    Upgrade now to experience the next generation of vocabulary mastery.
+                  </motion.p>
+
+                  {/* Download button */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.6 }}
+                  >
+                    <a href="/wordsnest-v2.0.0.apk" download>
+                      <motion.button
+                        whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(170,113,55,0.3)" }}
+                        whileTap={{ scale: 0.95 }}
+                        animate={{ boxShadow: ["0 4px 14px rgba(170,113,55,0.2)", "0 4px 20px rgba(170,113,55,0.4)", "0 4px 14px rgba(170,113,55,0.2)"] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        className="bg-gradient-to-r from-[#AA7137] to-[#C4956A] text-white px-8 py-3.5 rounded-full font-mono text-sm font-bold flex items-center gap-2.5 mx-auto shadow-lg hover:shadow-xl transition-all"
+                      >
+                        <Download size={16} />
+                        Download v2.0.0 Now
+                        <Sparkles size={14} className="text-yellow-200" />
+                      </motion.button>
+                    </a>
+                    <p className="text-[10px] text-[#BFA090] mt-3 font-mono">Free upgrade · Android 7+</p>
+                  </motion.div>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
       {/* Organic Blobs */}

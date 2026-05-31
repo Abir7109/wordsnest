@@ -26,11 +26,13 @@ export default function Reviews() {
     fetch(`${API_URL}/api/experiences`)
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data)) {
-          setReviews(data);
+        if (data && Array.isArray(data.experiences || data)) {
+          setReviews(data.experiences || data);
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        console.warn('Failed to load reviews');
+      })
       .finally(() => setLoading(false));
   }, []);
 
